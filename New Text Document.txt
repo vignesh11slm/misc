@@ -1,0 +1,81 @@
+import org.openqa.selenium.*;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+public class Library {
+   public static void main(String[] args) throws NumberFormatException, InterruptedException {
+   
+	  // File file = new File("C:/chromeedriver.exe");
+	   System.setProperty("webdriver.ie.driver", "C://IEDriverServer.exe"); 
+	   java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
+	   java.util.logging.Logger.getLogger("org.apache.http").setLevel(java.util.logging.Level.OFF);
+
+	 // DesiredCapabilities capabilities = new DesiredCapabilities().firefox();
+	   //capabilities.setCapability(FirefoxDriver.BINARY, "C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+      //WebDriver driver = new InternetExplorerDriver();
+      //Puts an Implicit wait, Will wait for 10 seconds before throwing exception
+      //driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+      
+	   HtmlUnitDriver driver = new HtmlUnitDriver();
+	  driver.setJavascriptEnabled(true);
+	   
+      //Launch website
+      	driver.get("https://viper.corelogic.com");
+     // driver.navigate().to("https://viper.corelogic.com/core_qda/login.jsp");
+      
+      //Maximize the browser
+      //driver.manage().window().maximize();
+      	
+      driver.findElement(By.id("j_username")).sendKeys("vvignesh");
+      driver.findElement(By.id("j_password")).sendKeys("slm@9492");
+      driver.findElement(By.xpath("//*[@id='loginform']/button")).click();
+      Thread.sleep(Long.parseLong("5000"));
+      
+      driver.findElement(By.xpath("//*[@id='menu']/ul/li[7]/a")).click();
+      driver.findElement(By.xpath("//*[@id='searchValueFipsCode']")).sendKeys("21003");
+      driver.findElement(By.xpath("//*[@id='searchFipsCode']/div[2]/button")).click();
+      Thread.sleep(Long.parseLong("4000"));
+      driver.findElement(By.xpath("//*[@id='jobGroupRunList']/tbody/tr/td[9]")).click();
+      Thread.sleep(Long.parseLong("4000"));
+      driver.findElement(By.xpath("//*[@id='color']/div[7]/button")).click();
+      Thread.sleep(Long.parseLong("4000"));
+      String out =driver.findElement(By.xpath(".//*[@id='report_source']/div[2]")).getText();
+
+      System.out.println(out);
+   
+      driver.findElement(By.xpath(".//*[@id='menu']/ul/li[7]/a")).click();
+      driver.findElement(By.xpath(".//*[@id='searchValueFipsCode']")).sendKeys("21003");
+      driver.findElement(By.xpath(".//*[@id='searchValueSubmittedBy']")).clear();
+      ((JavascriptExecutor)driver).executeScript ("document.getElementById('searchValueSubmittedDate').removeAttribute('readonly',0);");
+      WebElement date= driver.findElement(By.id("searchValueSubmittedDate"));
+      date.clear();
+      date.sendKeys("10/05/2014"); 
+      driver.findElement(By.xpath("//*[@id='searchFipsCode']/div[2]/button")).click();
+      Thread.sleep(Long.parseLong("4000"));
+      String max = driver.findElement(By.xpath(".//*[@id='list']/span")).getText();
+      max = max.substring(0, 2);
+      int maxValue = Integer.parseInt(max);
+      String str = driver.findElement(By.xpath(".//*[@id='jobGroupRunList']/tbody/tr[5]/td[4]")).getText();
+      int currentEdition = Integer.parseInt(str);
+      for (int i=2;i<=maxValue;i++)
+      {
+    	  String str1 = ".//*[@id='jobGroupRunList']/tbody/tr["+i+"]/td[4]";
+    	 // System.out.println(str1);
+    	  //System.out.println("MaxValue:"+ maxValue);
+          String edNumber = driver.findElement(By.xpath(str1)).getText();
+          int value = Integer.parseInt(edNumber);
+          if(value == currentEdition-1 )
+          {
+        	  driver.findElement(By.xpath(str1)).click();
+          }
+          
+      } 
+      Thread.sleep(Long.parseLong("4000"));
+      driver.findElement(By.xpath("//*[@id='color']/div[7]/button")).click();
+      Thread.sleep(Long.parseLong("4000"));
+      String out1 =driver.findElement(By.xpath(".//*[@id='report_source']/div[2]")).getText();
+
+      System.out.println(out1);
+      
+    
+   }
+}
