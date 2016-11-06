@@ -1,0 +1,56 @@
+package org.vicki.demo;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
+import org.openqa.selenium.UnhandledAlertException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.security.UserAndPassword;
+
+public class LoginDemo {
+
+	public static void main(String[] args) throws Exception {
+		
+		   //System.setProperty("webdriver.ie.driver", "C://IEDriverServer.exe"); 
+		   
+		  DesiredCapabilities dc = new DesiredCapabilities();
+		   dc.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR, UnexpectedAlertBehaviour.IGNORE);
+		   
+//		   HtmlUnitDriver driver = new HtmlUnitDriver();
+//		   driver.setJavascriptEnabled(true);
+		   WebDriver driver = new InternetExplorerDriver(dc);
+		   driver.manage().window().maximize();
+		   
+		   driver.get("https://myapps.corelogic.com");
+		   Thread.sleep(Long.parseLong("10000"));		  
+		   try{
+		         
+				 Alert alert = driver.switchTo().alert(); 
+		         alert.authenticateUsing(new UserAndPassword("isc\\vvignesh", "O"));
+//		         alert.accept();
+		         Thread.sleep(2000);
+		         
+		         Alert alert2 = driver.switchTo().alert();
+		         alert2.authenticateUsing(new UserAndPassword("isc\\vvignesh", "O"));
+//		         alert2.accept();
+		       }
+		 catch (UnhandledAlertException e) {                
+		e.printStackTrace();
+		 }
+		   Thread.sleep(5000);
+		   driver.findElement(By.id("257f1fac-2fdc-4fbb-93d5-13c5130af843_ahref")).click();
+		   Thread.sleep(5000);
+		   System.out.println(driver.getCurrentUrl());
+		   for(String winHandle : driver.getWindowHandles()){
+			    driver.switchTo().window(winHandle);
+			}
+		   System.out.println(driver.getCurrentUrl());
+		   driver.get("https://na27.salesforce.com/00O40000003qRF3");
+		   //driver.findElement(By.id("report_Tab")).click();
+		  
+	}
+}
