@@ -1,0 +1,35 @@
+import java.io.File;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+
+public class Main {
+
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+
+		//JFrame frame = new JFrame();
+		JDialog frame = new JDialog();
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+		int result = fileChooser.showOpenDialog(frame);
+		File selectedFile = fileChooser.getSelectedFile();
+		if (result == JFileChooser.APPROVE_OPTION) {
+		  
+		    System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+		}
+		String fileName = selectedFile.getAbsolutePath();
+		
+		if(fileName.contains("accdb"))
+		{
+			DatabaseConnection.getMSACCESSTtable(fileName);
+		}
+		else
+		{
+			System.out.println("Select Appropriate File");
+		}
+		
+		
+		//DatabaseConnection.getMSACCESSTtable();
+	}
+
+}
