@@ -26,7 +26,7 @@ public class Library {
       //driver.manage().window().maximize();
       	
       driver.findElement(By.id("j_username")).sendKeys("vvignesh");
-      driver.findElement(By.id("j_password")).sendKeys("slm@9492");
+      driver.findElement(By.id("j_password")).sendKeys("8888888");
       driver.findElement(By.xpath("//*[@id='loginform']/button")).click();
       Thread.sleep(Long.parseLong("5000"));
       
